@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html lang="ka">
+<html lang="ka" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>შენი ხმა. ჩვენი ქუთაისი. — ახალგაზრდული კვლევა</title>
-<meta name="description" content="ქუთაისის ახალგაზრდული საბჭოს ანონიმური კვლევა 14–29 წლის ახალგაზრდებისთვის. რეგისტრაციის გარეშე, ~8–10 წუთში.">
+<meta name="description" content="ქუთაისის ახალგაზრდული საბჭოს ანონიმური კვლევა 14–29 წლის ახალგაზრდებისთვის.">
 <meta name="theme-color" content="#1D3474">
 
-<!-- Open Graph — makes the Instagram/Telegram link preview look intentional, not like a bare URL -->
-<meta property="og:title" content="შენი ხმა. ჩვენი ქუთაისი.">
-<meta property="og:description" content="ანონიმური კვლევა ქუთაისელი ახალგაზრდებისთვის — ~8–10 წუთი, 50 კითხვა შენს შესახებ.">
-<meta property="og:type" content="website">
-
-<!-- Georgian-script fonts: Noto Serif Georgian for the display voice, Noto Sans Georgian for body text.
-     JetBrains Mono is Latin-only, used only for numerals/labels (timers, step numbers, the age badge). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
-<!-- Tailwind Play CDN: zero build step, drops straight onto GitHub Pages -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Supabase client for database storage -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          ink:     '#1D3474', // base background — matches the council logo's navy background exactly
-          surface: '#26407F', // card / section surface, one step up from ink
-          surface2:'#30508F', // hover / active surface
-          gold:    '#39B54A', // primary accent — the logo's green petal, used for CTAs & emphasis
-          foam:    '#00AEEF', // cool secondary accent — the logo's cyan petal, used for icons & quiet detail
-          fog:     '#F2EFE4', // primary text on dark — warm off-white, not a background color here
+          ink:      '#132350', // Slightly deeper base background for better visual contrast
+          surface:  '#1D3474', // Official council navy accent
+          surface2: '#26407F', // Interactive state fill
+          gold:     '#39B54A', // Vibrant green accent
+          foam:     '#00AEEF', // Cool cyan accent
+          fog:      '#F8F9FA', // Pure bright foreground text
         },
         fontFamily: {
           display: ['"Noto Serif Georgian"', 'serif'],
@@ -45,7 +36,6 @@
 </script>
 
 <style>
-  /* Respect reduced-motion first: the bridge-crossing animation is the one place we spend motion. */
   .bridge-signal {
     offset-path: path('M 8 78 C 60 20, 140 20, 200 78 S 340 136, 392 78');
     animation: cross 4.5s ease-in-out infinite;
@@ -56,28 +46,29 @@
     46%  { opacity: 1; }
     54%  { offset-distance: 50%; opacity: 1; }
     92%  { opacity: 1; }
-    100% { offset-distance: 100%; opacity: 0; } /* arrives, then dissolves — no trace left on the bridge */
+    100% { offset-distance: 100%; opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     .bridge-signal { animation: none; offset-distance: 50%; opacity: 0.9; }
   }
 
-  /* Visible keyboard focus in the accent color, since default browser outlines vanish on dark backgrounds */
   a:focus-visible, button:focus-visible {
     outline: 2px solid #39B54A;
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
-  .survey-option {
-    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  /* Enhanced selection box styling */
+  .survey-card-option {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .survey-option:has(input:checked) {
-    border-color: rgba(57, 181, 74, 0.85);
+  .survey-card-option:has(input:checked) {
+    border-color: #39B54A;
     background-color: rgba(57, 181, 74, 0.12);
-    transform: translateY(-1px);
+    box-shadow: 0 0 25px rgba(57, 181, 74, 0.15);
+    transform: translateY(-2px);
   }
-  .survey-option input {
+  .survey-card-option input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
@@ -85,123 +76,140 @@
 </style>
 </head>
 
-<body class="bg-ink text-fog font-body antialiased">
+<body class="relative min-h-screen bg-ink text-fog font-body antialiased selection:bg-gold selection:text-ink">
 
-  <!-- ============ HERO ============ -->
-  <header class="relative overflow-hidden px-6 pt-8 pb-16 sm:pt-14 sm:pb-24">
-    <!-- ambient glow, purely decorative -->
-    <div class="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-gold/10 blur-3xl" aria-hidden="true"></div>
+  <!-- Ambient background canvas -->
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-32 -right-32 h-[500px] w-[500px] rounded-full bg-foam/10 blur-[140px]"></div>
+    <div class="absolute top-1/2 -left-32 h-[500px] w-[500px] rounded-full bg-gold/10 blur-[140px]"></div>
+  </div>
 
-    <div class="mx-auto max-w-md sm:max-w-lg">
-      <!-- eyebrow -->
-      <p class="inline-flex items-center gap-2 rounded-full border border-foam/25 bg-surface/60 px-3.5 py-1.5 text-xs font-mono tracking-wide text-foam">
-        <span class="h-1.5 w-1.5 rounded-full bg-foam"></span>
+  <!-- Header Section -->
+  <header class="relative px-6 pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-white/5">
+    <div class="mx-auto max-w-xl text-center sm:text-left">
+      <div class="inline-flex items-center gap-2 rounded-full border border-foam/30 bg-surface/60 px-4 py-2 backdrop-blur-md text-xs font-mono tracking-wide text-foam shadow-lg shadow-foam/5">
+        <span class="h-2 w-2 rounded-full bg-foam animate-pulse"></span>
         ქუთაისის მერის ახალგაზრდული მრჩეველთა საბჭო
-      </p>
+      </div>
 
-      <!-- headline -->
-      <h1 class="mt-6 font-display text-4xl font-semibold leading-[1.15] text-fog sm:text-5xl">
+      <h1 class="mt-6 font-display text-4xl font-bold tracking-tight text-fog sm:text-6xl leading-[1.1]">
         შენი ხმა.<br>
-        <span class="text-gold">ჩვენი ქუთაისი.</span>
+        <span class="bg-gradient-to-r from-gold via-foam to-gold bg-clip-text text-transparent">ჩვენი ქუთაისი.</span>
       </h1>
 
-      <p class="mt-5 max-w-sm text-[15px] leading-relaxed text-fog/80 sm:text-base">
-        დაგვეხმარე გავიგოთ, რა სჭირდებათ ახალგაზრდებს ქუთაისში —
-        სრულიად ანონიმურად, რეგისტრაციის გარეშე.
+      <p class="mt-5 text-base leading-relaxed text-fog/80 sm:text-lg max-w-lg">
+        დაგვეხმარე გავიგოთ, რა სჭირდებათ ახალგაზრდებს ქუთაისში — სრულიად ანონიმურად, რეგისტრაციის გარეშე.
       </p>
 
-      <!-- signature element: a stylized crossing of the White Bridge over the Rioni.
-           the small dot travels from your side to the council's side, then fades —
-           the message arrives, the sender doesn't. -->
-      <svg viewBox="0 0 400 130" class="mt-8 h-24 w-full sm:h-28" aria-hidden="true">
-        <!-- riverbanks -->
-        <line x1="0" y1="100" x2="400" y2="100" stroke="#1E484D" stroke-width="1.5"/>
-        <!-- bridge towers -->
-        <line x1="30" y1="30" x2="30" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
-        <line x1="370" y1="30" x2="370" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
-        <!-- deck -->
-        <path d="M 8 78 C 60 20, 140 20, 200 78 S 340 136, 392 78" fill="none" stroke="#00AEEF" stroke-width="2" opacity="0.7"/>
-        <!-- suspension cables -->
-        <g stroke="#00AEEF" stroke-width="1" opacity="0.35">
-          <line x1="60" y1="34" x2="70" y2="72"/>
-          <line x1="90" y1="24" x2="105" y2="66"/>
-          <line x1="120" y1="20" x2="140" y2="62"/>
-          <line x1="260" y1="88" x2="245" y2="60"/>
-          <line x1="300" y1="112" x2="280" y2="70"/>
-          <line x1="335" y1="128" x2="315" y2="76"/>
-        </g>
-        <!-- the anonymous signal, crossing -->
-        <circle r="5" fill="#39B54A" class="bridge-signal"/>
-      </svg>
+      <!-- Animated Bridge Motif -->
+      <div class="my-8 rounded-2xl border border-white/10 bg-surface/30 p-4 backdrop-blur-sm">
+        <svg viewBox="0 0 400 130" class="h-20 w-full sm:h-24" aria-hidden="true">
+          <line x1="0" y1="100" x2="400" y2="100" stroke="#1E484D" stroke-width="1.5"/>
+          <line x1="30" y1="30" x2="30" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
+          <line x1="370" y1="30" x2="370" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
+          <path d="M 8 78 C 60 20, 140 20, 200 78 S 340 136, 392 78" fill="none" stroke="#00AEEF" stroke-width="2" opacity="0.7"/>
+          <g stroke="#00AEEF" stroke-width="1" opacity="0.35">
+            <line x1="60" y1="34" x2="70" y2="72"/>
+            <line x1="90" y1="24" x2="105" y2="66"/>
+            <line x1="120" y1="20" x2="140" y2="62"/>
+            <line x1="260" y1="88" x2="245" y2="60"/>
+            <line x1="300" y1="112" x2="280" y2="70"/>
+            <line x1="335" y1="128" x2="315" y2="76"/>
+          </g>
+          <circle r="5" fill="#39B54A" class="bridge-signal"/>
+        </svg>
+      </div>
 
-      <!-- CTA -->
-      <!-- NOTE for dev handoff: point this href at the live form (Google Form / Tally / custom page) once built -->
-      <a href="#survey"
-         id="start-survey"
-         class="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-base font-semibold text-ink shadow-lg shadow-gold/20 transition active:scale-[0.98] sm:w-auto">
-        დავიწყოთ
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <a href="#survey"
+           id="start-survey"
+           class="inline-flex items-center justify-center gap-3 rounded-2xl bg-gold px-8 py-4 text-base font-bold text-ink shadow-xl shadow-gold/20 transition hover:bg-gold/90 hover:shadow-gold/30 active:scale-[0.98]">
+          დავიწყოთ
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
 
-      <div class="mt-4 flex items-center gap-5 text-xs font-mono text-fog/60">
-        <span class="flex items-center gap-1.5">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          ~8–10 წუთი
-        </span>
-        <span class="flex items-center gap-1.5">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
-          100% ანონიმური
-        </span>
+        <div class="flex items-center justify-center sm:justify-start gap-6 text-xs font-mono text-fog/60">
+          <span class="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            ~8–10 წუთი
+          </span>
+          <span class="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+            100% ანონიმური
+          </span>
+        </div>
       </div>
     </div>
   </header>
 
-  <main>
-    <!-- ============ SURVEY ============ -->
-    <section id="survey" class="px-6 py-10 sm:py-14">
-      <div class="mx-auto max-w-md sm:max-w-2xl">
-        <div class="rounded-[28px] border border-white/10 bg-surface/90 p-4 shadow-2xl shadow-black/20 sm:p-6">
-          <div class="flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.24em] text-fog/55">
-            <span>ანონიმური კვლევა</span>
-            <span id="survey-counter">დაწყება</span>
-          </div>
-
-          <div class="mt-3 h-2 rounded-full bg-white/10">
-            <div id="survey-progress" class="h-2 rounded-full bg-gold transition-all" style="width: 0%;"></div>
-          </div>
-
-          <div id="survey-shell" class="mt-6"></div>
-
-          <div class="mt-6 flex items-center justify-between gap-3">
-            <button type="button" id="survey-back" class="hidden rounded-2xl border border-white/10 px-4 py-2.5 text-sm font-medium text-fog/80">უკან</button>
-            <div class="flex-1"></div>
-            <button type="button" id="survey-skip" class="hidden rounded-2xl border border-white/10 px-4 py-2.5 text-sm font-medium text-fog/80">არ შემიძლია პასუხის გაცემა</button>
-            <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gold px-5 py-3 text-sm font-semibold text-ink shadow-lg shadow-gold/20 transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100">დაწყება</button>
-          </div>
-
-          <div id="survey-summary" class="mt-6 hidden rounded-3xl border border-foam/20 bg-foam/10 p-5 text-left">
-            <p class="font-display text-xl font-semibold text-fog">მადლობა!</p>
-            <p class="mt-2 text-sm leading-relaxed text-fog/70">შენ მიერ შევსებული პასუხების რაოდენობა: <span id="survey-answer-count">0</span>/51.</p>
-            <button type="button" id="survey-json" class="mt-3 inline-flex items-center justify-center rounded-2xl border border-foam/30 px-4 py-2 text-sm font-medium text-foam transition hover:bg-foam/10">JSON-ად ნახვა</button>
-            <pre id="survey-json-output" class="mt-3 hidden max-h-48 overflow-auto rounded-2xl bg-ink/70 p-3 text-xs text-foam"></pre>
-          </div>
+  <!-- Main Survey Container -->
+  <main class="px-4 py-12 sm:px-6">
+    <section id="survey" class="mx-auto max-w-xl">
+      <div class="rounded-3xl border border-white/15 bg-surface/70 p-6 backdrop-blur-xl shadow-2xl shadow-black/40 sm:p-8">
+        
+        <!-- Header Controls / Progress -->
+        <div class="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-fog/60">
+          <span class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-foam"></span>
+            ანონიმური კვლევა
+          </span>
+          <span id="survey-counter" class="rounded-lg bg-white/5 px-2.5 py-1 border border-white/10 text-fog">დაწყება</span>
         </div>
+
+        <div class="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-ink/60 p-0.5 border border-white/5">
+          <div id="survey-progress" class="h-full rounded-full bg-gradient-to-r from-foam to-gold transition-all duration-300" style="width: 0%;"></div>
+        </div>
+
+        <!-- Dynamic Question Shell -->
+        <div id="survey-shell" class="mt-8"></div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6">
+          <button type="button" id="survey-back" class="hidden rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-fog/80 transition hover:bg-white/10 hover:text-fog">
+            უკან
+          </button>
+          
+          <div class="flex-1"></div>
+
+          <button type="button" id="survey-skip" class="hidden rounded-xl border border-white/10 bg-transparent px-4 py-3 text-sm font-medium text-fog/50 transition hover:text-fog/80">
+            გამოტოვება
+          </button>
+
+          <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-7 py-3.5 text-sm font-bold text-ink shadow-lg shadow-gold/20 transition hover:bg-gold/90 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100">
+            დაწყება
+          </button>
+        </div>
+
+        <!-- Completion Box -->
+        <div id="survey-summary" class="mt-6 hidden rounded-2xl border border-gold/30 bg-gold/10 p-6 text-left backdrop-blur-md">
+          <div class="flex items-center gap-3 text-gold">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <p class="font-display text-2xl font-bold text-fog">მადლობა!</p>
+          </div>
+          <p class="mt-3 text-sm leading-relaxed text-fog/80">შენ მიერ შევსებული პასუხების რაოდენობა: <span id="survey-answer-count" class="font-mono font-bold text-gold">0</span>/51.</p>
+          
+          <button type="button" id="survey-json" class="mt-4 inline-flex items-center justify-center rounded-xl border border-foam/40 bg-foam/10 px-4 py-2.5 text-xs font-mono text-foam transition hover:bg-foam/20">
+            JSON მონაცემების ნახვა
+          </button>
+          <pre id="survey-json-output" class="mt-4 hidden max-h-56 overflow-auto rounded-xl border border-white/10 bg-ink/90 p-4 font-mono text-xs text-foam leading-relaxed"></pre>
+        </div>
+
       </div>
     </section>
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="border-t border-white/5 px-6 py-10">
-    <div class="mx-auto flex max-w-md flex-col items-center gap-3 text-center sm:max-w-2xl">
-      <p class="font-display text-sm text-fog/70">ქუთაისის მუნიციპალიტეტის ახალგაზრდული საბჭო</p>
-      <p class="font-mono text-xs text-fog/40">14–29 · 2026</p>
-      <div class="mt-1 flex gap-4">
-        <!-- NOTE for dev handoff: replace # with the council's real Instagram / Telegram links -->
-        <a href="https://www.instagram.com/youth.kutaisi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram" class="text-fog/50 hover:text-gold" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/5 px-6 py-12">
+    <div class="mx-auto flex max-w-xl flex-col items-center gap-4 text-center">
+      <p class="font-display text-base font-medium text-fog/80">ქუთაისის მუნიციპალიტეტის ახალგაზრდული საბჭო</p>
+      <p class="font-mono text-xs text-fog/40">14–29 ასაკობრივი ჯგუფი · 2026</p>
+      
+      <div class="flex gap-5 mt-2">
+        <a href="https://www.instagram.com/youth.kutaisi" aria-label="Instagram" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
         </a>
-        <a href="https://www.facebook.com/kyac.ge" aria-label="Facebook" class="text-fog/50 hover:text-gold" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 8h2V5h-2c-2.8 0-5 2.2-5 5v2H7v3h2v6h3v-6h2.5l.5-3H12v-2c0-.6.4-1 1-1z"/></svg>
+        <a href="https://www.facebook.com/kyac.ge" aria-label="Facebook" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h2V5h-2c-2.8 0-5 2.2-5 5v2H7v3h2v6h3v-6h2.5l.5-3H12v-2c0-.6.4-1 1-1z"/></svg>
         </a>
       </div>
     </div>
@@ -219,13 +227,11 @@
     const surveyJsonButton = document.getElementById('survey-json');
     const surveyJsonOutput = document.getElementById('survey-json-output');
 
-    // Supabase configuration
     const SUPABASE_URL = 'https://lbchuixoszupimkxjgvy.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiY2h1aXhvc3p1cGlta3hqZ3Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1NzU0MjYsImV4cCI6MjEwMTE1MTQyNn0.9eOvf_4Qu1IkWqPtyFPCnxZuIbbVhowcn4GJk_6z3H8';
     const { createClient } = window.supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ============ REAL QUESTION BANK — 50 closed + 1 open, 10 thematic blocks ============
     const surveyQuestions = [
       { block: 'სამოქალაქო ჩართულობა', question: 'რატომ ხარ ნაკლებად ჩართული საქალაქო გადაწყვეტილებების მიღებაში?', type: 'single', options: ['არ ვიცი, სად და როგორ შემიძლია ჩართვა', 'დრო არ მყოფნის', 'მჯერა, რომ ჩემი აზრი ისედაც არაფერს შეცვლის', 'არასოდეს მქონია ასეთი შესაძლებლობა'] },
       { block: 'სამოქალაქო ჩართულობა', question: 'რა წაგახალისებდა ახალგაზრდულ საბჭოში ან მუნიციპალურ განხილვებში მონაწილეობისკენ?', type: 'single', options: ['ონლაინ ფორმატი, სახლიდან გაუსვლელად', 'მეგობრებთან ერთად მონაწილეობის შესაძლებლობა', 'კონკრეტული შედეგის დანახვა — რომ ჩემი აზრი რეალურად რაღაცას ცვლის', 'მცირე ჯილდო ან სერტიფიკატი მონაწილეობისთვის'] },
@@ -290,8 +296,7 @@
       { block: 'შენი იდეა', question: 'შენი იდეა: რა შეცვლიდა ცხოვრებას ქუთაისელი ახალგაზრდებისთვის?', type: 'text', options: [] }
     ];
 
-    const totalQuestions = surveyQuestions.length; // 51
-
+    const totalQuestions = surveyQuestions.length;
     let activeStep = 0;
     let answers = Array(totalQuestions).fill(undefined);
 
@@ -301,39 +306,37 @@
       const inputName = `q-${questionIndex}`;
 
       let markup = `
-        <div class="rounded-[24px] border border-white/10 bg-white/5 p-4 sm:p-5">
-          <p class="inline-flex items-center rounded-full border border-foam/20 bg-foam/10 px-3 py-1 text-[11px] font-mono uppercase tracking-[0.24em] text-foam">${question.block}</p>
-          <p class="mt-4 font-display text-xl font-semibold text-fog">${questionIndex + 1}. ${question.question}</p>
-          <div class="mt-4 space-y-2">
+        <div class="space-y-6">
+          <div class="inline-flex items-center gap-2 rounded-full border border-foam/30 bg-foam/10 px-3.5 py-1.5 text-xs font-mono font-medium tracking-wider text-foam">
+            ${question.block}
+          </div>
+
+          <h2 class="font-display text-2xl font-bold leading-snug text-fog sm:text-3xl">
+            <span class="text-gold font-mono mr-2">${questionIndex + 1}.</span>${question.question}
+          </h2>
+
+          <div class="mt-6 space-y-3">
       `;
 
       if (question.type === 'single') {
         question.options.forEach((option) => {
           const checked = currentValue === option;
           markup += `
-            <label class="survey-option flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left ${checked ? 'border-gold/70 bg-gold/10' : ''}">
+            <label class="survey-card-option flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-left cursor-pointer transition hover:bg-white/10 ${checked ? 'border-gold bg-gold/10' : ''}">
+              <span class="text-base leading-relaxed ${checked ? 'text-fog font-semibold' : 'text-fog/80'}">${option}</span>
               <input type="radio" name="${inputName}" value="${option}" ${checked ? 'checked' : ''}>
-              <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${checked ? 'border-gold bg-gold' : 'border-foam/50'}"></span>
-              <span class="text-sm leading-relaxed ${checked ? 'text-fog' : 'text-fog/80'}">${option}</span>
-            </label>
-          `;
-        });
-      } else if (question.type === 'scale') {
-        question.options.forEach((option, index) => {
-          const value = index + 1;
-          const checked = currentValue === String(value);
-          markup += `
-            <label class="survey-option flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left ${checked ? 'border-gold/70 bg-gold/10' : ''}">
-              <span class="text-sm ${checked ? 'text-fog' : 'text-fog/80'}">${option}</span>
-              <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${checked ? 'border-gold bg-gold' : 'border-foam/50'}"></span>
-              <input type="radio" name="${inputName}" value="${value}" ${checked ? 'checked' : ''}>
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${checked ? 'border-gold bg-gold text-ink' : 'border-white/30'}">
+                ${checked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+              </span>
             </label>
           `;
         });
       } else {
         markup += `
-          <textarea id="open-answer-${questionIndex}" class="min-h-28 w-full rounded-2xl border border-white/10 bg-ink/70 p-3 text-sm text-fog/80 outline-none ring-0" placeholder="ჩაწერე პასუხი...">${currentValue || ''}</textarea>
-          <p class="mt-2 text-xs leading-relaxed text-fog/50">დაწერე რაც გინდა — მოკლედ ან დაწვრილებით. მხოლოდ გთხოვთ, მოერიდოთ საკუთარი სახელის, ზუსტი მისამართის ან სხვა პირადი დეტალის მითითებას, რადგან პასუხი საჯაროდ გამოქვეყნებულ სტატისტიკაში აისახება.</p>
+          <div class="rounded-2xl border border-white/15 bg-ink/80 p-4 backdrop-blur-md">
+            <textarea id="open-answer-${questionIndex}" rows="4" class="w-full bg-transparent text-base text-fog placeholder-fog/40 outline-none resize-none" placeholder="ჩაწერე შენი აზრი ან ინიციატივა...">${currentValue || ''}</textarea>
+          </div>
+          <p class="text-xs leading-relaxed text-fog/50">მოერიდეთ პერსონალური მონაცემების (სახელი, გვარი, მისამართი) მითითებას. პასუხი სრულიად ანონიმურია.</p>
         `;
       }
 
@@ -362,8 +365,6 @@
       updateNextButtonState();
     }
 
-    // An answer counts as given if it's a real (non-empty) value, or the
-    // person explicitly said they can't answer via the "cannot answer" button.
     function isQuestionAnswered(index) {
       const value = answers[index];
       if (value === undefined) return false;
@@ -371,9 +372,6 @@
       return String(value).trim() !== '';
     }
 
-    // The "შემდეგი / დასრულება" button is disabled until the current
-    // question has an answer (mandatory), since "cannot answer" is now
-    // its own explicit choice rather than a bypass.
     function updateNextButtonState() {
       if (activeStep < 1 || activeStep > totalQuestions) {
         surveyNext.disabled = false;
@@ -385,10 +383,12 @@
     function updateSurveyUI() {
       if (activeStep === 0) {
         surveyShell.innerHTML = `
-          <div class="rounded-[24px] border border-white/10 bg-white/5 p-5 text-left">
-            <p class="font-display text-2xl font-semibold text-fog">მზად ხარ დასაწყებად?</p>
-            <p class="mt-3 text-sm leading-relaxed text-fog/70">კითხვები დაჯგუფებულია 10 თემატურ ბლოკად — სამოქალაქო ჩართულობა, განათლება, დასაქმება, სპორტი, ჯანმრთელობა და სხვა. ბოლოს ერთი ღია კითხვაც გელოდება.</p>
-            <p class="mt-4 text-xs font-mono uppercase tracking-[0.24em] text-fog/45">51 კითხვა · ~8–10 წუთი</p>
+          <div class="text-left space-y-4">
+            <h2 class="font-display text-3xl font-bold text-fog">მზად ხარ დასაწყებად?</h2>
+            <p class="text-base leading-relaxed text-fog/75">კითხვები დაჯგუფებულია 10 თემატურ ბლოკად — სამოქალაქო ჩართულობა, განათლება, დასაქმება, სპორტი, ჯანმრთელობა და სხვა.</p>
+            <div class="inline-flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 py-2 font-mono text-xs text-foam">
+              <span>51 კითხვა</span> • <span>~8–10 წუთი</span>
+            </div>
           </div>
         `;
         surveyBack.classList.add('hidden');
@@ -449,7 +449,6 @@
           console.error('Supabase error:', error);
           return false;
         }
-        console.log('Response saved successfully:', data);
         return true;
       } catch (err) {
         console.error('Error saving response:', err);
@@ -479,7 +478,6 @@
         return;
       }
 
-      // Guard against the disabled state being bypassed somehow — answering is mandatory.
       if (activeStep >= 1 && activeStep <= totalQuestions && !isQuestionAnswered(activeStep - 1)) {
         return;
       }
@@ -488,8 +486,7 @@
         activeStep += 1;
         updateSurveyUI();
       } else if (activeStep === totalQuestions) {
-        // Save to Supabase before moving to completion screen
-        const saved = await saveToSupabase();
+        await saveToSupabase();
         activeStep += 1;
         updateSurveyUI();
       }
