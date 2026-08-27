@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>შენი ხმა. ჩვენი ქუთაისი. — ახალგაზრდული კვლევა</title>
-<meta name="description" content="ქუთაისის ახალგაზრდული საბჭოს ანონიმური კვლევა 14–29 წლის ახალ��[...]>
+<meta name="description" content="ქუთაისის ახალგაზრდული საბჭოს ანონიმური კვლევა 14–29 წლის ახალგაზრდებისთვის.">
 <meta name="theme-color" content="#1D3474">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="styleshee[...]
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -18,12 +18,12 @@
     theme: {
       extend: {
         colors: {
-          ink:      '#132350', // Slightly deeper base background for better visual contrast
-          surface:  '#1D3474', // Official council navy accent
-          surface2: '#26407F', // Interactive state fill
-          gold:     '#39B54A', // Vibrant green accent
-          foam:     '#00AEEF', // Cool cyan accent
-          fog:      '#F8F9FA', // Pure bright foreground text
+          ink:      '#1D3474', // base background — matches the council logo's navy background exactly
+          surface:  '#26407F', // card / section surface, one step up from ink
+          surface2: '#30508F', // interactive / hover state fill
+          gold:     '#39B54A', // primary accent — the logo's green petal, used for CTAs & emphasis
+          foam:     '#00AEEF', // cool secondary accent — the logo's cyan petal, used for icons & quiet detail
+          fog:      '#F8F9FA', // primary text on dark
         },
         fontFamily: {
           display: ['"Noto Serif Georgian"', 'serif'],
@@ -98,7 +98,7 @@
       </h1>
 
       <p class="mt-5 text-base leading-relaxed text-fog/80 sm:text-lg max-w-lg">
-        დაგვეხმარე გავიგოთ, რა სჭირდებათ ახალგაზრდებს ქუთაისში — სრულიად ანონი[...]
+        დაგვეხმარე გავიგოთ, რა სჭირდებათ ახალგაზრდებს ქუთაისში — სრულიად ანონიმურად, რეგისტრაციის გარეშე.
       </p>
 
       <!-- Animated Bridge Motif -->
@@ -123,7 +123,7 @@
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
         <a href="#survey"
            id="start-survey"
-           class="inline-flex items-center justify-center gap-3 rounded-2xl bg-gold px-8 py-4 text-base font-bold text-ink shadow-xl shadow-gold/20 transition hover:bg-gold/90 hover:shadow-gold/30 act[...]
+           class="inline-flex items-center justify-center gap-3 rounded-2xl bg-gold px-8 py-4 text-base font-bold text-ink shadow-xl shadow-gold/20 transition hover:bg-gold/90 hover:shadow-gold/30 active:scale-[0.98]">
           დავიწყოთ
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -172,10 +172,10 @@
           <div class="flex-1"></div>
 
           <button type="button" id="survey-skip" class="hidden rounded-xl border border-white/10 bg-transparent px-4 py-3 text-sm font-medium text-fog/50 transition hover:text-fog/80">
-            გამოტოვება
+            არ შემიძლია პასუხის გაცემა
           </button>
 
-          <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-7 py-3.5 text-sm font-bold text-ink shadow-lg shadow-gold/20 transition hove[...]
+          <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-7 py-3.5 text-sm font-bold text-ink shadow-lg shadow-gold/20 transition hover:bg-gold/90 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100">
             დაწყება
           </button>
         </div>
@@ -186,9 +186,9 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <p class="font-display text-2xl font-bold text-fog">მადლობა!</p>
           </div>
-          <p class="mt-3 text-sm leading-relaxed text-fog/80">შენ მიერ შევსებული პასუხების რაოდენობა: <span id="survey-answer-count"[...]>
+          <p class="mt-3 text-sm leading-relaxed text-fog/80">შენ მიერ შევსებული პასუხების რაოდენობა: <span id="survey-answer-count" class="font-mono font-bold text-gold">0</span>/51.</p>
           
-          <button type="button" id="survey-json" class="mt-4 inline-flex items-center justify-center rounded-xl border border-foam/40 bg-foam/10 px-4 py-2.5 text-xs font-mono text-foam transition hove[...]
+          <button type="button" id="survey-json" class="mt-4 inline-flex items-center justify-center rounded-xl border border-foam/40 bg-foam/10 px-4 py-2.5 text-xs font-mono text-foam transition hover:bg-foam/20">
             JSON მონაცემების ნახვა
           </button>
           <pre id="survey-json-output" class="mt-4 hidden max-h-56 overflow-auto rounded-xl border border-white/10 bg-ink/90 p-4 font-mono text-xs text-foam leading-relaxed"></pre>
@@ -205,10 +205,10 @@
       <p class="font-mono text-xs text-fog/40">14–29 ასაკობრივი ჯგუფი · 2026</p>
       
       <div class="flex gap-5 mt-2">
-        <a href="https://www.instagram.com/youth.kutaisi" aria-label="Instagram" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" tar[...]
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx=[...]/>
+        <a href="https://www.instagram.com/youth.kutaisi" aria-label="Instagram" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
         </a>
-        <a href="https://www.facebook.com/kyac.ge" aria-label="Facebook" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" target="_bl[...]
+        <a href="https://www.facebook.com/kyac.ge" aria-label="Facebook" class="rounded-lg bg-white/5 p-2.5 text-fog/60 border border-white/10 transition hover:border-gold hover:text-gold" target="_blank" rel="noopener noreferrer">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h2V5h-2c-2.8 0-5 2.2-5 5v2H7v3h2v6h3v-6h2.5l.5-3H12v-2c0-.6.4-1 1-1z"/></svg>
         </a>
       </div>
@@ -228,72 +228,72 @@
     const surveyJsonOutput = document.getElementById('survey-json-output');
 
     const SUPABASE_URL = 'https://lbchuixoszupimkxjgvy.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiY2h1aXhvc3p1cGlta3hqZ3Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1NzU0MjYsImV4cCI6MjEwMTE1MTQyNn0[...]
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxiY2h1aXhvc3p1cGlta3hqZ3Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1NzU0MjYsImV4cCI6MjEwMTE1MTQyNn0.9eOvf_4Qu1IkWqPtyFPCnxZuIbbVhowcn4GJk_6z3H8';
     const { createClient } = window.supabase;
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const surveyQuestions = [
-      { block: 'სამოქალაქო ჩართულობა', question: 'რატომ ხარ ნაკლებად ჩართული საქალაქო გად[...]
-      { block: 'სამოქალაქო ჩართულობა', question: 'რა წაგახალისებდა ახალგაზრდულ საბჭოში ა�[...]
-      { block: 'სამოქალაქო ჩართულობა', question: 'რომელი საშუალებით გინდა, რომ საბჭომ ახა��[...]
-      { block: 'სამოქალაქო ჩართულიობა', question: 'რა გაგაცნობდა შენს უფლებებსა და ಸಾಧ್ಯო��[...]
-      { block: 'სამოქალაქო ჩართულობა', question: 'რა გიშლის ხელს მოხალისეობრივ საქმიანობაშ[...]'
+      { block: 'სამოქალაქო ჩართულობა', question: 'რატომ ხარ ნაკლებად ჩართული საქალაქო გადაწყვეტილებების მიღებაში?', type: 'single', options: ['არ ვიცი, სად და როგორ შემიძლია ჩართვა', 'დრო არ მყოფნის', 'მჯერა, რომ ჩემი აზრი ისედაც არაფერს შეცვლის', 'არასოდეს მქონია ასეთი შესაძლებლობა'] },
+      { block: 'სამოქალაქო ჩართულობა', question: 'რა წაგახალისებდა ახალგაზრდულ საბჭოში ან მუნიციპალურ განხილვებში მონაწილეობისკენ?', type: 'single', options: ['ონლაინ ფორმატი, სახლიდან გაუსვლელად', 'მეგობრებთან ერთად მონაწილეობის შესაძლებლობა', 'კონკრეტული შედეგის დანახვა — რომ ჩემი აზრი რეალურად რაღაცას ცვლის', 'მცირე ჯილდო ან სერტიფიკატი მონაწილეობისთვის'] },
+      { block: 'სამოქალაქო ჩართულობა', question: 'რომელი საშუალებით გინდა, რომ საბჭომ ახალგაზრდებს მოუსმინოს?', type: 'single', options: ['ანონიმური ონლაინ გამოკითხვები', 'ღია შეხვედრები სკოლებში/უნივერსიტეტებში', 'სოციალურ ქსელებში პირდაპირი კომუნიკაცია', 'საბჭოს წარმომადგენლები უშუალოდ უბნებში'] },
+      { block: 'სამოქალაქო ჩართულობა', question: 'რა გაგაცნობდა შენს უფლებებსა და შესაძლებლობებს ქალაქში?', type: 'single', options: ['მოკლე ვიდეოები სოციალურ ქსელებში', 'საინფორმაციო შეხვედრები სკოლაში/უნივერსიტეტში', 'ერთიანი ვებგვერდი ყველა შესაძლებლობით', 'თანატოლების მიერ გავრცელებული ინფორმაცია'] },
+      { block: 'სამოქალაქო ჩართულობა', question: 'რა გიშლის ხელს მოხალისეობრივ საქმიანობაში ჩართვას?', type: 'single', options: ['არ ვიცი, სად ვიპოვო შესაბამისი შესაძლებლობა', 'დროის ნაკლებობა (სწავლა/სამუშაო)', 'ტრანსპორტის ან მისაწვდომობის პრობლემა', 'ამ ფორმატის მიმართ ინტერესი არ მაქვს'] },
 
-      { block: 'არაფორმალური განათლება', question: 'რომელი უნარის განვითარება გინდა ყველ�[...]
-      { block: 'არაფორმალური განათლება', question: 'რომელი ფორმატი გიხდება ყველაზე მოსახ�[...]
-      { block: 'არაფორმალური განათლება', question: 'რა მოქმედებს ყველაზე მეტად შენს არჩევ[...]
-      { block: 'არაფორმალური განათლება', question: 'სად გინდა, რომ გაიხსნას ახალგაზრდული სა�[...]
-      { block: 'არაფორმალური განათლება', question: 'რა გაინტერესებს ყველაზე მეტად კარიერულ[...]
+      { block: 'არაფორმალური განათლება', question: 'რომელი უნარის განვითარება გინდა ყველაზე მეტად, რასაც სკოლა/უნივერსიტეტი არ გასწავლის?', type: 'single', options: ['ციფრული/ტექნიკური უნარები (პროგრამირება, დიზაინი და სხვ.)', 'ენების შესწავლა', 'ფინანსური წიგნიერება', 'კომუნიკაციისა და ლიდერობის უნარები'] },
+      { block: 'არაფორმალური განათლება', question: 'რომელი ფორმატი გიხდება ყველაზე მოსახერხებელი დამატებითი განათლებისთვის?', type: 'single', options: ['ონლაინ კურსები, საკუთარი ტემპით', 'ხანმოკლე ინტენსიური ტრენინგები (1–3 დღე)', 'რეგულარული საღამოს/შაბათ-კვირის ჯგუფები', 'ერთჯერადი საჯარო ლექციები/მასტერკლასები'] },
+      { block: 'არაფორმალური განათლება', question: 'რა მოქმედებს ყველაზე მეტად შენს არჩევანზე, დარეგისტრირდე თუ არა კურსზე?', type: 'single', options: ['ფასი (უფასოა თუ არა)', 'ადგილმდებარეობა/მანძილი სახლიდან', 'კურსის პრაქტიკული სარგებელი (მაგ. სამსახურის პოვნაში დახმარება)', 'ვინ ატარებს კურსს'] },
+      { block: 'არაფორმალური განათლება', question: 'სად გინდა, რომ გაიხსნას ახალგაზრდული სასწავლო/კრეატიული სივრცე ქუთაისში?', type: 'single', options: ['ქალაქის ცენტრში', 'საცხოვრებელ უბნებში, სახლთან ახლოს', 'სასწავლო დაწესებულებების ტერიტორიაზე', 'მდებარეობა არ არის მნიშვნელოვანი — ონლაინ ხელმისაწვდომობა მირჩევნია'] },
+      { block: 'არაფორმალური განათლება', question: 'რა გაინტერესებს ყველაზე მეტად კარიერული ორიენტაციის კუთხით?', type: 'single', options: ['რომელი პროფესიები იქნება მოთხოვნადი მომავალში', 'როგორ დავწერო რეზიუმე/გავიარო გასაუბრება', 'სტაჟირების შესაძლებლობები ქუთაისში', 'როგორ დავიწყო საკუთარი მცირე ბიზნესი'] },
 
-      { block: 'ფორმალური განათლება', question: 'რა დაგეხმარებოდა სასწავლო პროცესის გაუმ�[...]
-      { block: 'ფორმალური განათლება', question: 'შენი აზრით, რატომ წყვეტენ ახალგაზრდები სწა�[...]
-      { block: 'ფორმალური განათლება', question: 'რა დაეხმარებოდა მათ, ვინც სწავლა შეწყვიტა, ��[...]
-      { block: 'ფორმალური განათლება', question: 'რამდენად კარგად იცი, სად მოიძიო ინფორმაცია [...]
-      { block: 'ფორმალური განათლება', question: 'რა გახდის უნივერსიტეტში/კოლეჯში სწავლას შ��[...]
+      { block: 'ფორმალური განათლება', question: 'რა დაგეხმარებოდა სასწავლო პროცესის გაუმჯობესებაში?', type: 'single', options: ['მენტორის/დამატებითი მასწავლებლის მხარდაჭერა რთულ საგნებში', 'სასწავლო მასალების ხელმისაწვდომობა ონლაინ', 'ფსიქოლოგის კონსულტაცია სტრესთან გამკლავებისთვის', 'სასწავლო დატვირთვის შემცირება'] },
+      { block: 'ფორმალური განათლება', question: 'შენი აზრით, რატომ წყვეტენ ახალგაზრდები სწავლას ვადამდე ადრე?', type: 'single', options: ['ოჯახის ფინანსური მდგომარეობა', 'სამსახურის საჭიროება', 'მოტივაციის ნაკლებობა / სისტემასთან შეუსაბამობა', 'პირადი ან ოჯახური მიზეზები'] },
+      { block: 'ფორმალური განათლება', question: 'რა დაეხმარებოდა მათ, ვინც სწავლა შეწყვიტა, დაბრუნებაში?', type: 'single', options: ['მოქნილი განრიგი (საღამოს/დისტანციური ფორმატი)', 'ფინანსური მხარდაჭერა/სტიპენდია', 'სწავლისა და მუშაობის შეთავსების შესაძლებლობა', 'ფსიქოლოგიური და კარიერული კონსულტირება'] },
+      { block: 'ფორმალური განათლება', question: 'რამდენად კარგად იცი, სად მოიძიო ინფორმაცია საზღვარგარეთ სწავლის შესაძლებლობებზე?', type: 'single', options: ['კარგად ვიცი, სად მოვძებნო', 'მსმენია, მაგრამ დეტალები არ ვიცი', 'საერთოდ არ ვიცი, საიდან დავიწყო', 'არ მაინტერესებს'] },
+      { block: 'ფორმალური განათლება', question: 'რა გახდის უნივერსიტეტში/კოლეჯში სწავლას შენთვის უფრო ხელმისაწვდომს?', type: 'single', options: ['მეტი სახელმწიფო გრანტი/სტიპენდია', 'ტრანსპორტის ან საცხოვრებლის ხარჯის შემცირება', 'ონლაინ/ჰიბრიდული სწავლის შესაძლებლობა', 'პროფესიული განათლების პოპულარიზაცია, როგორც ალტერნატივის'] },
 
-      { block: 'დასაქმება', question: 'რა არის შენთვის ყველაზე დიდი ბარიერი სამსახურის პოვნ�[...]
-      { block: 'დასაქმება', question: 'რა სახის მხარდაჭერა გაგიადვილებდა პირველი სამსახური[...]
-      { block: 'დასაქმება', question: 'რომელი სფეროს განვითარება გინდა ქუთაისში ყველაზე მე��[...]
-      { block: 'დასაქმება', question: 'რა დაგეხმარებოდა საკუთარი ბიზნესის ან სტარტაპის დაწ��[...]
-      { block: 'დასაქმება', question: 'რა გააძლიერებდა ახალგაზრდების კონკურენტუნარიანობა��[...]
+      { block: 'დასაქმება', question: 'რა არის შენთვის ყველაზე დიდი ბარიერი სამსახურის პოვნაში ქუთაისში?', type: 'single', options: ['ვაკანსიების სიმცირე ჩემი სპეციალობით', 'გამოცდილების ნაკლებობა', 'დაბალი ანაზღაურება შემოთავაზებულ პოზიციებზე', 'ინფორმაციის ნაკლებობა ვაკანსიების შესახებ'] },
+      { block: 'დასაქმება', question: 'რა სახის მხარდაჭერა გაგიადვილებდა პირველი სამსახურის პოვნას?', type: 'single', options: ['ანაზღაურებადი სტაჟირების პროგრამები', 'კარიერული კონსულტაცია და CV-ის მომზადება', 'მენტორობა გამოცდილ სპეციალისტთან', 'დამსაქმებლებთან პირდაპირი შეხვედრები/ბაზრობები'] },
+      { block: 'დასაქმება', question: 'რომელი სფეროს განვითარება გინდა ქუთაისში ყველაზე მეტად, სამუშაო ადგილების თვალსაზრისით?', type: 'single', options: ['IT და ტექნოლოგიები', 'ტურიზმი და მომსახურება', 'წარმოება/მრეწველობა', 'კრეატიული ინდუსტრიები (დიზაინი, მედია, ხელოვნება)'] },
+      { block: 'დასაქმება', question: 'რა დაგეხმარებოდა საკუთარი ბიზნესის ან სტარტაპის დაწყებაში?', type: 'single', options: ['საწყისი კაპიტალი/გრანტი', 'უფასო საკონსულტაციო მხარდაჭერა (იურიდიული, ფინანსური)', 'თანამშრომლობის სივრცე (co-working space)', 'გამოცდილი მეწარმეების მენტორობა'] },
+      { block: 'დასაქმება', question: 'რა გააძლიერებდა ახალგაზრდების კონკურენტუნარიანობას შრომის ბაზარზე?', type: 'single', options: ['პრაქტიკული უნარების სწავლება სასწავლო პროცესში', 'ენების ცოდნის გაუმჯობესება', 'ციფრული უნარების სწავლება', 'სამუშაო გამოცდილების მიღება ჯერ კიდევ სწავლის დროს'] },
 
-      { block: 'თავისუფალი დრო და კულტურა', question: 'რა აკლია ქუთაისს თავისუფალი დროის სას[...]
-      { block: 'თავისუფალი დრო და კულტურა', question: 'რომელი ტიპის ღონისძიება გაინტერესებ��[...]
-      { block: 'თავისუფალი დრო და კულტურა', question: 'რატომ ხარ ნაკლებად ჩართული კულტურულ ღ[...]
-      { block: 'წავისუფალი დრო და კულტურა', question: 'სად გინდა, რომ გაჩნდეს ახალი ახალგაზრ��[...]
-      { block: 'თავისუფალი დრო და კულტურა', question: 'რა გჭირდება, რომ თავად შექმნა კულტურუ��[...]
+      { block: 'თავისუფალი დრო და კულტურა', question: 'რა აკლია ქუთაისს თავისუფალი დროის სასარგებლოდ გატარებისთვის?', type: 'single', options: ['ახალგაზრდული სივრცეები (უფასო, კაფე-ტიპის)', 'კულტურული ღონისძიებები ჩემი ინტერესებით', 'გასართობი ინფრასტრუქტურა', 'ინფორმაცია არსებული შესაძლებლობების შესახებ'] },
+      { block: 'თავისუფალი დრო და კულტურა', question: 'რომელი ტიპის ღონისძიება გაინტერესებდა ყველაზე მეტად?', type: 'single', options: ['მუსიკალური/საკონცერტო ღონისძიებები', 'ხელოვნების ვორქშოფები', 'ფილმის ჩვენებები/დისკუსიები', 'თემატური ფესტივალები/ბაზრობები'] },
+      { block: 'თავისუფალი დრო და კულტურა', question: 'რატომ ხარ ნაკლებად ჩართული კულტურულ ღონისძიებებში?', type: 'single', options: ['ინფორმაცია არ მაქვს, რა იმართება', 'ფასი მაღალია ჩემთვის', 'ჩემთვის საინტერესო არაფერი იმართება', 'დრო არ მაქვს'] },
+      { block: 'თავისუფალი დრო და კულტურა', question: 'სად გინდა, რომ გაჩნდეს ახალი ახალგაზრდული სივრცე ქუთაისში?', type: 'single', options: ['რიონის სანაპიროზე', 'ცენტრში, ძველ შენობებში', 'საცხოვრებელ უბნებში', 'საგანმანათლებლო დაწესებულებების მიმდებარედ'] },
+      { block: 'თავისუფალი დრო და კულტურა', question: 'რა გჭირდება, რომ თავად შექმნა კულტურული ან კრეატიული ინიციატივა?', type: 'single', options: ['ვიცი რა მინდა, მაგრამ ფინანსური მხარდაჭერა მჭირდება', 'სივრცე/ინფრასტრუქტურა', 'გუნდი/თანამოაზრეები', 'არ ვიცი, საიდან დავიწყო'] },
 
-      { block: 'სპორტი', question: 'რა გიშლის ხელს რეგულარულად სპორტით დაკავებაში?', type: 'single', options[...]
-      { block: 'სპორტი', question: 'რომელი სპორტული ინფრასტრუქტურა გინდა ყველაზე მეტად ქუთ��[...]
-      { block: 'სპორტი', question: 'რა ფორმატი წაგახალისებდა სპორტში ჩართვისკენ?', type: 'single', options: ['[...]
-      { block: 'სპორტი', question: 'რომელი სპორტის სახეობის განვითარება გინდა ქუთაისში ყვე��[...]
-      { block: 'სპორტი', question: 'რა დაგეხმარებოდა სპორტში ჩართვის დაწყებაში ნულიდან?', type: 's[...]
+      { block: 'სპორტი', question: 'რა გიშლის ხელს რეგულარულად სპორტით დაკავებაში?', type: 'single', options: ['დროის ნაკლებობა', 'ფინანსური ბარიერი (აბონემენტი/ინვენტარი)', 'შესაბამისი ინფრასტრუქტურის ნაკლებობა ჩემს რაიონში', 'მოტივაციის/კომპანიის ნაკლებობა'] },
+      { block: 'სპორტი', question: 'რომელი სპორტული ინფრასტრუქტურა გინდა ყველაზე მეტად ქუთაისში?', type: 'single', options: ['უფასო ღია სპორტული მოედნები', 'საცურაო აუზი', 'ველობილიკები', 'მრავალფუნქციური სპორტდარბაზი'] },
+      { block: 'სპორტი', question: 'რა ფორმატი წაგახალისებდა სპორტში ჩართვისკენ?', type: 'single', options: ['უფასო ან დაბალფასიანი ჯგუფური ვარჯიშები', 'სპორტული კლუბები სკოლის/უნივერსიტეტის ბაზაზე', 'სამეზობლო/უბნის ტურნირები', 'ინდივიდუალური ვარჯიშის შესაძლებლობა, მოქნილი განრიგით'] },
+      { block: 'სპორტი', question: 'რომელი სპორტის სახეობის განვითარება გინდა ქუთაისში ყველაზე მეტად?', type: 'single', options: ['გუნდური სპორტი (ფეხბურთი, კალათბურთი და სხვ.)', 'წყლის სპორტი', 'ცეკვა/ფიტნესი', 'გარე აქტივობები (ლაშქრობა, ველოსპორტი)'] },
+      { block: 'სპორტი', question: 'რა დაგეხმარებოდა სპორტში ჩართვის დაწყებაში ნულიდან?', type: 'single', options: ['დამწყებთათვის ადაპტირებული ჯგუფები', 'მწვრთნელის/ინსტრუქტორის ხელმისაწვდომობა', 'ინვენტარის უფასო სესხება', 'მეგობრებთან ერთად დარეგისტრირების შესაძლებლობა'] },
 
-      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა გიშლის ხელს, საჭიროებისას მიმართ�[...]
-      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რომელი ჯანმრთელობის ინფორმაცია გაკ[...]
-      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რომელი ფორმატი გირჩევნია ფსიქოლოგი[...]
-      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა გაზრდიდა შენს ნდობას სამედიცინო �[...]
-      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა დაგეხმარებოდა ჯანსაღი ცხოვრების[...]
+      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა გიშლის ხელს, საჭიროებისას მიმართო სამედიცინო დაწესებულებას?', type: 'single', options: ['ფასი/ხელმისაწვდომობა', 'არ ვიცი, სად და ვის მივმართო', 'მორცხვობა ან უხერხულობის განცდა', 'დრო არ მაქვს'] },
+      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რომელი ჯანმრთელობის ინფორმაცია გაკლია ყველაზე მეტად?', type: 'single', options: ['ფსიქიკური ჯანმრთელობა და სტრესთან გამკლავება', 'კვება და ჯანსაღი ცხოვრების წესი', 'რეპროდუქციული ჯანმრთელობა', 'პირველადი დახმარება/გადაუდებელ სიტუაციებში ქცევა'] },
+      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რომელი ფორმატი გირჩევნია ფსიქოლოგიური მხარდაჭერის მისაღებად?', type: 'single', options: ['ანონიმური ონლაინ კონსულტაცია/ჩატი', 'სკოლის/უნივერსიტეტის ფსიქოლოგი', 'ახალგაზრდული ცენტრის ფსიქოლოგი, დანიშვნით', 'სატელეფონო ცხელი ხაზი'] },
+      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა გაზრდიდა შენს ნდობას სამედიცინო სისტემის მიმართ?', type: 'single', options: ['კონფიდენციალურობის მკაფიო გარანტია', 'ახალგაზრდებზე მორგებული, არაშემფასებელი მიდგომა', 'ფასების გამჭვირვალობა', 'ინფორმაციის ხელმისაწვდომობა ონლაინ, ვიზიტამდე'] },
+      { block: 'ჯანმრთელობა და კეთილდღეობა', question: 'რა დაგეხმარებოდა ჯანსაღი ცხოვრების წესის დანერგვაში?', type: 'single', options: ['ხელმისაწვდომი და იაფი ჯანსაღი კვება', 'სპორტული აქტივობების ხელმისაწვდომობა', 'საგანმანათლებლო კამპანიები', 'თემატური მხარდამჭერი საზოგადოება/ჯგუფი'] },
 
-      { block: 'უსაფრთხოება', question: 'რა გაგრძნობინებდა თავს უფრო უსაფრთხოდ ქუთაისის ქუ��[...]
-      { block: 'უსაფრთხოება', question: 'რამდენად ცხადია შენთვის, სად უნდა მიმართო, თუ შენ ან [...]
-      { block: 'უსაფრთხოება', question: 'რა დაეხმარებოდა ბულინგის/დამცირების პრევენციას თა[...]
-      { block: 'უსაფრთხოება', question: 'რა გაგიმჯობესებდა უსაფრთხოების განცდას ონლაინ სივ[...]
-      { block: 'უსაფრთხოება', question: 'რა დაგეხმარებოდა, უფრო თავდაჯერებულად იგრძო თავი �[...]
+      { block: 'უსაფრთხოება', question: 'რა გაგრძნობინებდა თავს უფრო უსაფრთხოდ ქუთაისის ქუჩებში, გვიან საათებში?', type: 'single', options: ['უკეთესი განათება', 'მეტი პოლიციის პატრულირება', 'საზოგადოებრივი ტრანსპორტის ხელმისაწვდომობა გვიან საათებში', 'ცხოვლი, დასახლებული საზოგადოებრივი სივრცეები'] },
+      { block: 'უსაფრთხოება', question: 'რამდენად ცხადია შენთვის, სად უნდა მიმართო, თუ შენ ან შენი მეგობარი ძალადობის მსხვერპლი გახდება?', type: 'single', options: ['ვიცი, სად მივმართო', 'ბუნდოვანი წარმოდგენა მაქვს, მაგრამ დარწმუნებული არ ვარ', 'საერთოდ არ ვიცი', 'ცხელი ხაზი ყველაზე ხელმისაწვდომი იქნებოდა ჩემთვის'] },
+      { block: 'უსაფრთხოება', question: 'რა დაეხმარებოდა ბულინგის/დამცირების პრევენციას თანატოლებს შორის?', type: 'single', options: ['საგანმანათლებლო კამპანიები ადრეული ასაკიდან', 'ანონიმური შეტყობინების მექანიზმი', 'მასწავლებელთა/მშობელთა ტრენინგები', 'თანატოლთა მხარდამჭერი ჯგუფები'] },
+      { block: 'უსაფრთხოება', question: 'რა გაგიმჯობესებდა უსაფრთხოების განცდას ონლაინ სივრცეში?', type: 'single', options: ['კიბერბულინგზე რეაგირების ნათელი მექანიზმი', 'ციფრული წიგნიერების საგანმანათლებლო კამპანიები', 'ანონიმური დახმარების ხაზი ონლაინ პრობლემებისთვის', 'მშობლების/მასწავლებლების უკეთესი ინფორმირებულობა'] },
+      { block: 'უსაფრთხოება', question: 'რა დაგეხმარებოდა, უფრო თავდაჯერებულად იგრძნო თავი კონფლიქტურ სიტუაციებში?', type: 'single', options: ['კომუნიკაციისა და კონფლიქტის მართვის ტრენინგები', 'თვითდაცვის კურსები', 'ფსიქოლოგიური მხარდაჭერა', 'თანატოლთა მხარდაჭერის ქსელი'] },
 
-      { block: 'ინკლუზია და თანასწორობა', question: 'რა შეამცირებდა შეზღუდული შესაძლებლობი[...]
-      { block: 'ინკლუზია და თანასწორობა', question: 'რა გახდის საჯარო სივრცეებს უფრო ხელმის�[...]
-      { block: 'ინკლუზია და თანასწორობა', question: 'რა დაეხმარებოდა გოგონებსა და ბიჭებს თა�[...]
-      { block: 'ინკლუზია და თანასწორობა', question: 'რა დაგეხმარებოდა, თუ ეთნიკური ან რელიგი[...]
-      { block: 'ინკლუზია და თანასწორობა', question: 'რა გახდიდა ახალგაზრდულ ინიციატივებს უ��[...]
+      { block: 'ინკლუზია და თანასწორობა', question: 'რა შეამცირებდა შეზღუდული შესაძლებლობის მქონე ახალგაზრდების მიმართ სტიგმას ქუთაისში?', type: 'single', options: ['საზოგადოებრივი ცნობიერების ამაღლების კამპანიები', 'მეტი ერთობლივი აქტივობა შშმ და არაშშმ ახალგაზრდებს შორის', 'საჯარო სივრცეების ადაპტირება (პანდუსები, ტრანსპორტი)', 'ინკლუზიური განათლების გაძლიერება სკოლებში'] },
+      { block: 'ინკლუზია და თანასწორობა', question: 'რა გახდის საჯარო სივრცეებს უფრო ხელმისაწვდომს ყველასთვის?', type: 'single', options: ['პანდუსები და ლიფტები საზოგადოებრივ შენობებში', 'ადაპტირებული საზოგადოებრივი ტრანსპორტი', 'ხმოვანი/ვიზუალური ნავიგაცია', 'თანამშრომელთა ტრენინგი ინკლუზიურ მომსახურებაზე'] },
+      { block: 'ინკლუზია და თანასწორობა', question: 'რა დაეხმარებოდა გოგონებსა და ბიჭებს თანასწორ პირობებში ჩართვას სპორტულ/სახელოვნებო აქტივობებში?', type: 'single', options: ['ცალკეული ჯგუფების/განრიგის შეთავაზება, საჭიროებისამებრ', 'ინფორმაციული კამპანია სტერეოტიპების წინააღმდეგ', 'თანაბარი ინვესტიცია გოგონებისა და ბიჭების პროგრამებში', 'მშობლების ჩართვა/ინფორმირება'] },
+      { block: 'ინკლუზია და თანასწორობა', question: 'რა დაგეხმარებოდა, თუ ეთნიკური ან რელიგიური უმცირესობის წარმომადგენელი ხარ ქუთაისში?', type: 'single', options: ['მეტი ინფორმაცია ჩემს ენაზე', 'საზოგადოებაში ინტეგრაციის პროგრამები', 'დისკრიმინაციის შემთხვევაში მიმართვის მკაფიო მექანიზმი', 'ამის საჭიროება არ მაქვს/არ შემხვედრია პრობლემა'] },
+      { block: 'ინკლუზია და თანასწორობა', question: 'რა გახდიდა ახალგაზრდულ ინიციატივებს უფრო ინკლუზიურს, სოციალური სტატუსის მიუხედავად?', type: 'single', options: ['უფასო ან სუბსიდირებული მონაწილეობა', 'ტრანსპორტის ხელმისაწვდომობა შორეული უბნებიდან', 'ინფორმაციის გავრცელება ყველასთვის გასაგებ ენაზე', 'მოხალისეთა დახმარება მონაწილეობის პროცესში'] },
 
-      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რომელი პრობლემა ყველაზე მეტა��[...]
-      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რომელი ტრანსპორტის გაუმჯობეს[...]
-      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'სად გინდა, რომ გაუმჯობესდეს სა[...]
-      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რა დაგეხმარებოდა გარემოსდაცვ[...]
-      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'თუ საბჭოს შენი უბნისთვის ერთი [...]
+      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რომელი პრობლემა ყველაზე მეტად მოქმედებს შენს ყოველდღიურობაზე ქუთაისში?', type: 'single', options: ['საზოგადოებრივი ტრანსპორტის ხარისხი/ხელმისაწვდომობა', 'ქუჩების/ტროტუარების მდგომარეობა', 'მწვანე/დასასვენებელი სივრცეების სიმცირე', 'ინტერნეტისა და საზოგადოებრივი Wi-Fi ხელმისაწვდომობა'] },
+      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რომელი ტრანსპორტის გაუმჯობესება მოგცემდა ყველაზე მეტ თავისუფლებას?', type: 'single', options: ['უფრო ხშირი ავტობუსების განრიგი', 'ღამის ტრანსპორტის დამატება', 'დაბალფასიანი/უფასო ბარათი მოსწავლეებისთვის/სტუდენტებისთვის', 'ველობილიკების გაუმჯობესება'] },
+      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'სად გინდა, რომ გაუმჯობესდეს საზოგადოებრივი სივრცე ქუთაისში?', type: 'single', options: ['ჩემს საცხოვრებელ უბანში', 'ცენტრში', 'საგანმანათლებლო დაწესებულებების მიმდებარედ', 'რიონის სანაპიროზე'] },
+      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'რა დაგეხმარებოდა გარემოსდაცვით საკითხებში ჩართვას (გადამუშავება, გამწვანება)?', type: 'single', options: ['მარტივი და ხელმისაწვდომი გადამუშავების პუნქტები', 'გამწვანების ინიციატივები, რომლებშიც შემიძლია ჩავერთო', 'საგანმანათლებლო კამპანიები', 'მაგალითი/ინიციატივა თანატოლების მხრიდან'] },
+      { block: 'ქალაქის გარემო და ინფრასტრუქტურა', question: 'თუ საბჭოს შენი უბნისთვის ერთი კონკრეტული პროექტის განხორციელება შეეძლო, რომელს აირჩევდი?', type: 'single', options: ['ახალგაზრდული/კულტურული ცენტრი', 'სპორტული მოედანი/დარბაზი', 'გამწვანებული საზოგადოებრივი სივრცე', 'უკეთესი განათება და უსაფრთხო ქუჩები'] },
 
-      { block: 'შენი იდეა', question: 'შენი იდეა: რა შეცვლიდა ცხოვრებას ქუთაისელი ახალგაზრ�[...]
+      { block: 'შენი იდეა', question: 'შენი იდეა: რა შეცვლიდა ცხოვრებას ქუთაისელი ახალგაზრდებისთვის?', type: 'text', options: [] }
     ];
 
     const totalQuestions = surveyQuestions.length;
@@ -322,7 +322,7 @@
         question.options.forEach((option) => {
           const checked = currentValue === option;
           markup += `
-            <label class="survey-card-option flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-left cursor-pointer transition hover:bg-white/10 ${chec[...]
+            <label class="survey-card-option flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-left cursor-pointer transition hover:bg-white/10 ${checked ? 'border-gold bg-gold/10' : ''}">
               <span class="text-base leading-relaxed ${checked ? 'text-fog font-semibold' : 'text-fog/80'}">${option}</span>
               <input type="radio" name="${inputName}" value="${option}" ${checked ? 'checked' : ''}>
               <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${checked ? 'border-gold bg-gold text-ink' : 'border-white/30'}">
@@ -334,9 +334,9 @@
       } else {
         markup += `
           <div class="rounded-2xl border border-white/15 bg-ink/80 p-4 backdrop-blur-md">
-            <textarea id="open-answer-${questionIndex}" rows="4" class="w-full bg-transparent text-base text-fog placeholder-fog/40 outline-none resize-none" placeholder="ჩაწერე შენ�[...]
+            <textarea id="open-answer-${questionIndex}" rows="4" class="w-full bg-transparent text-base text-fog placeholder-fog/40 outline-none resize-none" placeholder="ჩაწერე შენი აზრი ან ინიციატივა...">${currentValue || ''}</textarea>
           </div>
-          <p class="text-xs leading-relaxed text-fog/50">მოერიდეთ პერსონალური მონაცემების (სახელი, გვარი, მისა[...]
+          <p class="text-xs leading-relaxed text-fog/50">მოერიდეთ პერსონალური მონაცემების (სახელი, გვარი, მისამართი) მითითებას. პასუხი სრულიად ანონიმურია.</p>
         `;
       }
 
@@ -385,7 +385,7 @@
         surveyShell.innerHTML = `
           <div class="text-left space-y-4">
             <h2 class="font-display text-3xl font-bold text-fog">მზად ხარ დასაწყებად?</h2>
-            <p class="text-base leading-relaxed text-fog/75">კითხვები დაჯგუფებულია 10 თემატურ ბლოკად — სამოქალაქ��[...]
+            <p class="text-base leading-relaxed text-fog/75">კითხვები დაჯგუფებულია 10 თემატურ ბლოკად — სამოქალაქო ჩართულობა, განათლება, დასაქმება, სპორტი, ჯანმრთელობა და სხვა.</p>
             <div class="inline-flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 py-2 font-mono text-xs text-foam">
               <span>51 კითხვა</span> • <span>~8–10 წუთი</span>
             </div>
@@ -434,30 +434,16 @@
     }
 
     async function saveToSupabase() {
-      const answeredCount = answers.filter(
-        (value) => value !== undefined && value !== '__cannot_answer__' && value !== ''
-      ).length;
-
-      // Map the answers array into grouped thematic objects
-      const payload = {
-        answered_count: answeredCount,
-        civic_engagement: answers.slice(0, 5),
-        informal_education: answers.slice(5, 10),
-        formal_education: answers.slice(10, 15),
-        employment: answers.slice(15, 20),
-        leisure_culture: answers.slice(20, 25),
-        sports: answers.slice(25, 30),
-        health_wellbeing: answers.slice(30, 35),
-        safety: answers.slice(35, 40),
-        inclusion_equality: answers.slice(40, 45),
-        city_environment: answers.slice(45, 50),
-        user_idea: answers[50] ?? null
+      const answeredCount = answers.filter((value) => value !== undefined && value !== '__cannot_answer__' && value !== '').length;
+      const responseData = {
+        answers: answers,
+        answered_count: answeredCount
       };
 
       try {
         const { data, error } = await supabaseClient
           .from('responses')
-          .insert([payload]);
+          .insert([responseData]);
 
         if (error) {
           console.error('Supabase error:', error);
