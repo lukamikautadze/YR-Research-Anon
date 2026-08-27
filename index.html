@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>შენი ხმა. ჩვენი ქუთაისი. — ახალგაზრდული კვლევა</title>
 <meta name="description" content="ქუთაისის ახალგაზრდული საბჭოს ანონიმური კვლევა 14–29 წლის ახალგაზრდებისთვის. რეგისტრაციის გარეშე, ~8–10 წუთში.">
-<meta name="theme-color" content="#0F2C30">
+<meta name="theme-color" content="#1D3474">
 
 <!-- Open Graph — makes the Instagram/Telegram link preview look intentional, not like a bare URL -->
 <meta property="og:title" content="შენი ხმა. ჩვენი ქუთაისი.">
-<meta property="og:description" content="ანონიმური კვლევა ქუთაისელი ახალგაზრდებისთვის — ~8–10 წუთი, 0 კითხვა შენ შესახებ.">
+<meta property="og:description" content="ანონიმური კვლევა ქუთაისელი ახალგაზრდებისთვის — ~8–10 წუთი, 50 კითხვა შენს შესახებ.">
 <meta property="og:type" content="website">
 
 <!-- Georgian-script fonts: Noto Serif Georgian for the display voice, Noto Sans Georgian for body text.
@@ -27,11 +27,11 @@
     theme: {
       extend: {
         colors: {
-          ink:     '#0F2C30', // base background — deep river-at-dusk teal, not the default near-black
-          surface: '#173B40', // card / section surface, one step up from ink
-          surface2:'#1E484D', // hover / active surface
-          gold:    '#E8A945', // primary accent — evening light on the Rioni, used for CTAs & emphasis
-          foam:    '#9FDBC9', // cool secondary accent — river-foam mint, used for icons & quiet detail
+          ink:     '#1D3474', // base background — matches the council logo's navy background exactly
+          surface: '#26407F', // card / section surface, one step up from ink
+          surface2:'#30508F', // hover / active surface
+          gold:    '#39B54A', // primary accent — the logo's green petal, used for CTAs & emphasis
+          foam:    '#00AEEF', // cool secondary accent — the logo's cyan petal, used for icons & quiet detail
           fog:     '#F2EFE4', // primary text on dark — warm off-white, not a background color here
         },
         fontFamily: {
@@ -64,7 +64,7 @@
 
   /* Visible keyboard focus in the accent color, since default browser outlines vanish on dark backgrounds */
   a:focus-visible, button:focus-visible {
-    outline: 2px solid #E8A945;
+    outline: 2px solid #39B54A;
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -73,8 +73,8 @@
     transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
   }
   .survey-option:has(input:checked) {
-    border-color: rgba(232, 169, 69, 0.85);
-    background-color: rgba(232, 169, 69, 0.12);
+    border-color: rgba(57, 181, 74, 0.85);
+    background-color: rgba(57, 181, 74, 0.12);
     transform: translateY(-1px);
   }
   .survey-option input {
@@ -96,7 +96,7 @@
       <!-- eyebrow -->
       <p class="inline-flex items-center gap-2 rounded-full border border-foam/25 bg-surface/60 px-3.5 py-1.5 text-xs font-mono tracking-wide text-foam">
         <span class="h-1.5 w-1.5 rounded-full bg-foam"></span>
-        ქუთაისის ახალგაზრდული საბჭო
+        ქუთაისის მერის ახალგაზრდული მრჩეველთა საბჭო
       </p>
 
       <!-- headline -->
@@ -117,12 +117,12 @@
         <!-- riverbanks -->
         <line x1="0" y1="100" x2="400" y2="100" stroke="#1E484D" stroke-width="1.5"/>
         <!-- bridge towers -->
-        <line x1="30" y1="30" x2="30" y2="100" stroke="#9FDBC9" stroke-width="2" opacity="0.55"/>
-        <line x1="370" y1="30" x2="370" y2="100" stroke="#9FDBC9" stroke-width="2" opacity="0.55"/>
+        <line x1="30" y1="30" x2="30" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
+        <line x1="370" y1="30" x2="370" y2="100" stroke="#00AEEF" stroke-width="2" opacity="0.55"/>
         <!-- deck -->
-        <path d="M 8 78 C 60 20, 140 20, 200 78 S 340 136, 392 78" fill="none" stroke="#9FDBC9" stroke-width="2" opacity="0.7"/>
+        <path d="M 8 78 C 60 20, 140 20, 200 78 S 340 136, 392 78" fill="none" stroke="#00AEEF" stroke-width="2" opacity="0.7"/>
         <!-- suspension cables -->
-        <g stroke="#9FDBC9" stroke-width="1" opacity="0.35">
+        <g stroke="#00AEEF" stroke-width="1" opacity="0.35">
           <line x1="60" y1="34" x2="70" y2="72"/>
           <line x1="90" y1="24" x2="105" y2="66"/>
           <line x1="120" y1="20" x2="140" y2="62"/>
@@ -131,7 +131,7 @@
           <line x1="335" y1="128" x2="315" y2="76"/>
         </g>
         <!-- the anonymous signal, crossing -->
-        <circle r="5" fill="#E8A945" class="bridge-signal"/>
+        <circle r="5" fill="#39B54A" class="bridge-signal"/>
       </svg>
 
       <!-- CTA -->
@@ -175,8 +175,8 @@
           <div class="mt-6 flex items-center justify-between gap-3">
             <button type="button" id="survey-back" class="hidden rounded-2xl border border-white/10 px-4 py-2.5 text-sm font-medium text-fog/80">უკან</button>
             <div class="flex-1"></div>
-            <button type="button" id="survey-skip" class="hidden rounded-2xl border border-white/10 px-4 py-2.5 text-sm font-medium text-fog/80">გამოტოვება</button>
-            <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gold px-5 py-3 text-sm font-semibold text-ink shadow-lg shadow-gold/20 transition active:scale-[0.98]">დაწყება</button>
+            <button type="button" id="survey-skip" class="hidden rounded-2xl border border-white/10 px-4 py-2.5 text-sm font-medium text-fog/80">არ შემიძლია პასუხის გაცემა</button>
+            <button type="button" id="survey-next" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gold px-5 py-3 text-sm font-semibold text-ink shadow-lg shadow-gold/20 transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100">დაწყება</button>
           </div>
 
           <div id="survey-summary" class="mt-6 hidden rounded-3xl border border-foam/20 bg-foam/10 p-5 text-left">
@@ -303,7 +303,7 @@
       let markup = `
         <div class="rounded-[24px] border border-white/10 bg-white/5 p-4 sm:p-5">
           <p class="inline-flex items-center rounded-full border border-foam/20 bg-foam/10 px-3 py-1 text-[11px] font-mono uppercase tracking-[0.24em] text-foam">${question.block}</p>
-          <p class="mt-4 font-display text-xl font-semibold text-fog">${question.question}</p>
+          <p class="mt-4 font-display text-xl font-semibold text-fog">${questionIndex + 1}. ${question.question}</p>
           <div class="mt-4 space-y-2">
       `;
 
@@ -345,16 +345,41 @@
           if (element.type === 'radio') {
             answers[questionIndex] = element.value;
             renderQuestionCard(questionIndex);
+            updateNextButtonState();
           } else if (element.tagName === 'TEXTAREA') {
             answers[questionIndex] = element.value;
+            updateNextButtonState();
           }
         });
         element.addEventListener('input', () => {
           if (element.tagName === 'TEXTAREA') {
             answers[questionIndex] = element.value;
+            updateNextButtonState();
           }
         });
       });
+
+      updateNextButtonState();
+    }
+
+    // An answer counts as given if it's a real (non-empty) value, or the
+    // person explicitly said they can't answer via the "cannot answer" button.
+    function isQuestionAnswered(index) {
+      const value = answers[index];
+      if (value === undefined) return false;
+      if (value === '__cannot_answer__') return true;
+      return String(value).trim() !== '';
+    }
+
+    // The "შემდეგი / დასრულება" button is disabled until the current
+    // question has an answer (mandatory), since "cannot answer" is now
+    // its own explicit choice rather than a bypass.
+    function updateNextButtonState() {
+      if (activeStep < 1 || activeStep > totalQuestions) {
+        surveyNext.disabled = false;
+        return;
+      }
+      surveyNext.disabled = !isQuestionAnswered(activeStep - 1);
     }
 
     function updateSurveyUI() {
@@ -376,7 +401,7 @@
       }
 
       if (activeStep === totalQuestions + 1) {
-        const answeredCount = answers.filter((value) => value !== undefined && value !== '__skipped__' && value !== '').length;
+        const answeredCount = answers.filter((value) => value !== undefined && value !== '__cannot_answer__' && value !== '').length;
         surveyAnswerCount.textContent = String(answeredCount);
         surveyJsonOutput.textContent = JSON.stringify(
           surveyQuestions.map((question, index) => ({
@@ -405,10 +430,11 @@
       surveyCounter.textContent = `${activeStep}/${totalQuestions}`;
       surveyProgress.style.width = `${(activeStep / totalQuestions) * 100}%`;
       renderQuestionCard(activeStep - 1);
+      updateNextButtonState();
     }
 
     async function saveToSupabase() {
-      const answeredCount = answers.filter((value) => value !== undefined && value !== '__skipped__' && value !== '').length;
+      const answeredCount = answers.filter((value) => value !== undefined && value !== '__cannot_answer__' && value !== '').length;
       const responseData = {
         answers: answers,
         answered_count: answeredCount
@@ -440,7 +466,7 @@
 
     surveySkip.addEventListener('click', () => {
       if (activeStep > 0 && activeStep <= totalQuestions) {
-        answers[activeStep - 1] = '__skipped__';
+        answers[activeStep - 1] = '__cannot_answer__';
         activeStep += 1;
         updateSurveyUI();
       }
@@ -450,6 +476,11 @@
       if (activeStep === 0) {
         activeStep = 1;
         updateSurveyUI();
+        return;
+      }
+
+      // Guard against the disabled state being bypassed somehow — answering is mandatory.
+      if (activeStep >= 1 && activeStep <= totalQuestions && !isQuestionAnswered(activeStep - 1)) {
         return;
       }
 
